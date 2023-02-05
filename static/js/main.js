@@ -2,8 +2,9 @@ $(document).ready(function () {
     // Init
     $('.image-section').hide();
     $('.loader').hide();
-    $('#result').hide();
-
+    //$('#result').hide();
+	
+	
     // Upload Preview
     function readURL(input) {
         if (input.files && input.files[0]) {
@@ -19,21 +20,25 @@ $(document).ready(function () {
     $("#imageUpload").change(function () {
         $('.image-section').show();
         $('#btn-predict').show();
-        $('#result').text('');
-        $('#result').hide();
+		
+        //$('#result').text('');
+        //$('#result').hide();
         readURL(this);
     });
 
     // Predict
     $('#btn-predict').click(function () {
         var form_data = new FormData($('#upload-file')[0]);
+		
 
         // Show loading animation
         $(this).hide();
         $('.loader').show();
+		$('.image-section').hide();
 
         // Make prediction by calling api /predict
         $.ajax({
+			
             type: 'POST',
             url: '/predict',
             data: form_data,
@@ -43,9 +48,10 @@ $(document).ready(function () {
             async: true,
             success: function (data) {
                 // Get and display the result
+				$("#content").load("/templates/index.html");
                 $('.loader').hide();
-                $('#result').fadeIn(600);
-                $('#result').text(' Result:  ' + data);
+                //$('#result').fadeIn(600);
+                //$('#result').show();
                 console.log('Success!');
             },
         });
